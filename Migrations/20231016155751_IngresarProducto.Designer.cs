@@ -3,6 +3,7 @@ using APIProductos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIProductos.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231016155751_IngresarProducto")]
+    partial class IngresarProducto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,20 +54,6 @@ namespace APIProductos.Migrations
                             Cantidad = 34,
                             Descripcion = "Desc 1",
                             Nombre = "Producto 1"
-                        },
-                        new
-                        {
-                            IdProducto = 2,
-                            Cantidad = 34,
-                            Descripcion = "Desc 2",
-                            Nombre = "Producto 2"
-                        },
-                        new
-                        {
-                            IdProducto = 3,
-                            Cantidad = 3,
-                            Descripcion = "Desc 3",
-                            Nombre = "Producto 3"
                         });
                 });
 #pragma warning restore 612, 618

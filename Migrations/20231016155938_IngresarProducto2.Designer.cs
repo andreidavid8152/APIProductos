@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIProductos.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231011145826_CreacionTabla")]
-    partial class CreacionTabla
+    [Migration("20231016155938_IngresarProducto2")]
+    partial class IngresarProducto2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,22 @@ namespace APIProductos.Migrations
                     b.HasKey("IdProducto");
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdProducto = 1,
+                            Cantidad = 34,
+                            Descripcion = "Desc 1",
+                            Nombre = "Producto 1"
+                        },
+                        new
+                        {
+                            IdProducto = 2,
+                            Cantidad = 34,
+                            Descripcion = "Desc 2",
+                            Nombre = "Producto 2"
+                        });
                 });
 #pragma warning restore 612, 618
         }
