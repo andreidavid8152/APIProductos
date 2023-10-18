@@ -28,28 +28,71 @@ namespace APIProductos.Controllers
         }
 
         // GET api/<ProductoController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{IdProducto}")]
+        public async Task<IActionResult> Get(int IdProducto)
         {
-            return Ok("");
+            Producto producto = await _db.Productos.FirstOrDefaultAsync(x=>x.IdProducto == IdProducto);
+            if(producto == null) {
+                return BadRequest();
+            }
+            return Ok(producto);
         }
 
         // POST api/<ProductoController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Producto producto)
         {
+            Producto pEncontrado = await _db.Productos.FirstOrDefaultAsync(x => x.IdProducto == producto.IdProducto);
+
+            if( pEncontrado == null && producto != null)
+            {
+
+                await _db.Productos.AddAsync(producto);
+                await _db.SaveChangesAsync();
+                return Ok(producto);
+
+            }
+
+            return BadRequest();
         }
 
         // PUT api/<ProductoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{IdProductos}")]
+        public async Task<IActionResult> Put(int IdProductos, [FromBody] Producto producto)
         {
+
+            Producto pEncontrado = await _db.Productos.FirstOrDefaultAsync(x => x.IdProducto == producto.IdProducto);
+
+            if (pEncontrado != null)
+            {
+                pEncontrado.Nombre = producto.Nombre != null ? producto.Nombre : pEncontrado.Nombre;
+                pEncontrado.Descripcion = producto.Descripcion != null ? producto.Descripcion : pEncontrado.Descripcion;
+                pEncontrado.Cantidad = producto.Cantidad != null ? producto.Cantidad : pEncontrado.Cantidad;
+                _db.Update(pEncontrado);
+                await _db.SaveChangesAsync();
+                return Ok(pEncontrado);
+            }
+
+
+            return BadRequest();
         }
 
         // DELETE api/<ProductoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{IdProducto}")]
+        public async Task<IActionResult> Delete(int IdProducto)
         {
+
+            Producto pEncontrado = await _db.Productos.FirstOrDefaultAsync(x => x.IdProducto == IdProducto);
+
+
+            if (pEncontrado != null)
+            {
+                _db.Productos.Remove(pEncontrado);
+                await _db.SaveChangesAsync();
+                return NoContent(); 
+            }
+
+            return BadRequest();
         }
     }
 }
